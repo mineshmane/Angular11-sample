@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserServiceService } from '../../services/userService/user-service.service'
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -8,19 +11,10 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserServiceService) { }
 
   ngOnInit() {
-    // this.registerForm = this.formBuilder.group({
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
 
-    //   email: ['', Validators.required],
-
-    //   password: ['', Validators.required],
-
-
-    // })
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12), Validators.pattern('[a-zA-Z ]*')]],
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12), Validators.pattern('[a-zA-Z ]*')]],
@@ -40,47 +34,30 @@ export class RegisterComponent implements OnInit {
 
 
 
-  register($event) {
 
-
-    let reqdata = {
-      firstName: this.registerForm.value.firstName,
-      lastName: this.registerForm.value.lastName,
-      email: this.registerForm.value.email,
-      password: this.registerForm.value.password
-    }
-
-
-    console.log(" req data ", reqdata);
-
-
-    console.log(" calling register", $event);
-  }
-
-  private createUser = (registerFormValue) => {
+  register = (registerFormValue) => {
     try {
       let newUser = {
         firstName: registerFormValue.firstName,
         lastName: registerFormValue.lastName,
         email: registerFormValue.email,
         password: registerFormValue.password,
-        // service: 'advance"
+        service: 'advance'
+        // console.log("new user created ", newUser);
       }
-      console.log("new user created ", newUser);
 
+      this.userService.registerUser(newUser).subscribe(response => {
+        console.log(" register successfulll", response);
 
-      // this.userService.register(newUser).subscribe(response => {
-      //   console.log('response ', response);
-      //   this.snackBar.open('register succesfully', '', { duration: 2000 });
-      //   this.router.navigate(['/login']);
-
-      // }, error => {
-      //   console.log('error ', error);
-
-      // })
+      })
+    
     } catch (error) {
       console.log(error);
 
     }
+  }
+  login() {
+    this.router.navigate(['login']);
+
   }
 }
