@@ -18,6 +18,12 @@ import { TakenoteComponent } from './components/takenote/takenote.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import {MatListModule} from '@angular/material/list';
+import { DisplaynoteComponent } from './components/displaynote/displaynote.component';
+import { IconComponent } from './components/icon/icon.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UpdateComponent } from './components/update/update.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,16 +31,21 @@ import {MatListModule} from '@angular/material/list';
     LoginComponent,
     DashbaordComponent,
     NoteComponent,
-    TakenoteComponent
+    TakenoteComponent,
+    DisplaynoteComponent,
+    IconComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    AppRoutingModule,MatMenuModule,MatDialogModule,
     BrowserAnimationsModule,MatFormFieldModule,FormsModule,ReactiveFormsModule,
     MatIconModule,MatInputModule,MatButtonModule,MatCardModule,HttpClientModule,MatSidenavModule,
     MatToolbarModule,MatListModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [UpdateComponent]
+
 })
 export class AppModule { }
